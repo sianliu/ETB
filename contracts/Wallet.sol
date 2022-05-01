@@ -24,11 +24,14 @@ contract Wallet {
   // Restricts createTransfer and approveTransfer to only approvers   
   modifier onlyApprover() {
       bool allowed = false;
+      // approversLength = approvers.length;
+      // gasleft()? 
       for(uint256 i = 0; i < approvers.length; i++) {
         if(approvers[i] == msg.sender) {
           allowed = true;
         }
       }
+      // can we move this statement to above the for loop?
       require(allowed == true, "Only approver allowed");
       _;
   }
