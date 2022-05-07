@@ -1,17 +1,51 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-// @ts-expect-error ts-migrate(6142) FIXME: Module './App' was resolved to '/Users/sianliu/Dro... Remove this comment to see the full error message
-import App from './App';
+import React from 'react'
+import { Web3ReactProvider } from '@web3-react/core'
+import { Web3Provider } from '@ethersproject/providers'
+import { useWeb3React } from '@web3-react/core'
+import { InjectedConnector } from '@web3-react/injected-connector'
 
-// @ts-expect-error ts-migrate(2345) FIXME: Argument of type 'HTMLElement | null' is not assig... Remove this comment to see the full error message
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-  <React.StrictMode>
-    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
-  </React.StrictMode>
-);
+export const injectedConnector = new InjectedConnector({
+  supportedChainIds: [
+    1, // Mainet
+    3, // Ropsten
+    4, // Rinkeby
+    5, // Goerli
+    42, // Kovan
+  ],
+})
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+function getLibrary(provider: any): Web3Provider {
+  const library = new Web3Provider(provider)
+  library.pollingInterval = 12000
+  return library
+}
+
+export const Wallet = () => {
+  const { chainId, account, activate, active } = useWeb3React<Web3Provider>()
+
+  const onClick = () => {
+    activate(injectedConnector)
+  }
+
+  return (
+    <div>
+      <div>ChainId: {chainId}</div>
+      <div>Account: {account}</div>
+      {active ? (
+        <div>✅ </div>
+      ) : (
+        <button type="button" onClick={onClick}>
+          Connect
+        </button>
+      )}
+    </div>
+  )
+}
+
+export const App = () => {
+  return (
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Wallet />
+    </Web3ReactProvider>
+  )
+}
