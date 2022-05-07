@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-/// @author Jonathan Liu
+/// @author Jonathan Liu with reference to 
+/// https://github.com/jklepatch/eattheblocks/tree/master/blockchain-masterclass/wallet-1-smart-contract
 /// @title Week 7 HW Multisig Wallet
 contract Wallet {
   address[] public approvers; 
@@ -20,13 +21,17 @@ contract Wallet {
     quorum = _quorum;
   }
 
+  // Restricts createTransfer and approveTransfer to only approvers   
   modifier onlyApprover() {
       bool allowed = false;
+      // approversLength = approvers.length;
+      // gasleft()? 
       for(uint256 i = 0; i < approvers.length; i++) {
         if(approvers[i] == msg.sender) {
           allowed = true;
         }
       }
+      // can we move this statement to above the for loop?
       require(allowed == true, "Only approver allowed");
       _;
   }
