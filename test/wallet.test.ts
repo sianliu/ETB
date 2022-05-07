@@ -6,12 +6,16 @@
 const { expect } = require('chai');
 
 // start test block 
+// @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'describe'. Do you need to instal... Remove this comment to see the full error message
 describe('Wallet', function () {
-    before(async function () {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'before'.
+    before(async function(this: any) {
+        // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'ethers'.
         this.Wallet = await ethers.getContractFactory('Wallet');
     });
 
-    beforeEach(async function () {
+    // @ts-expect-error ts-migrate(2304) FIXME: Cannot find name 'beforeEach'.
+    beforeEach(async function(this: any) {
         this.wallet = await this.Wallet.deploy(); 
         await this.wallet.deployed();
     }); 
@@ -21,7 +25,8 @@ describe('Wallet', function () {
     // each describe block represents a set of tests 
 
     // test case
-    it('Number of approvers is the correct number', async function () {
+    // @ts-expect-error ts-migrate(2582) FIXME: Cannot find name 'it'. Do you need to install type... Remove this comment to see the full error message
+    it('Number of approvers is the correct number', async function(this: any) {
         await this.wallet.store(3);
 
         // test if the returned value is the same one

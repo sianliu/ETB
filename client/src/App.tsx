@@ -6,6 +6,7 @@ function App() {
 
   useEffect(() => {
     const init = async () => {
+      // @ts-expect-error ts-migrate(2339) FIXME: Property 'wallet' does not exist on type 'unknown'... Remove this comment to see the full error message
       const { wallet } = await getBlockchain();
       setWallet(wallet);
     };
@@ -19,6 +20,7 @@ function App() {
   }
 
   return (
+    // @ts-expect-error ts-migrate(17004) FIXME: Cannot use JSX unless the '--jsx' flag is provided... Remove this comment to see the full error message
     <div className="App">
     </div>
   );
