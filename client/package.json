@@ -40,11 +40,8 @@
     ]
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@web3-react/core": "^6.1.9",
-    "@web3-react/injected-connector": "^6.0.7"
-=======
+    "@web3-react/injected-connector": "^6.0.7",
     "ts-migrate": "^0.1.28"
->>>>>>> fc631d43a14eb97bef710831273e248643129435
   }
 }
